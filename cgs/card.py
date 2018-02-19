@@ -1,3 +1,5 @@
+# Card.py
+
 class Card(object):
     """ Every card has a name, a strength level, and action indicators
 
@@ -32,9 +34,3 @@ class Card(object):
 
     def __eq__(self, other_card):
         return self.name == other_card
-
-    def pick_player(self):
-        return self.pick_player
-
-    def prompt(self):
-        return self.prompt

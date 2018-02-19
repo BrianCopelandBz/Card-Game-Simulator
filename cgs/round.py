@@ -1,18 +1,6 @@
-# Round
-#
-# Called by: Game
-#
-# Parameters:
-#
-# - players: array of a tuples, in format of (name, key),
-#            where both name and key are strings
-# -- name: string representing the players name
-# -- key: string which is the code that a player uses to authenticate
-#
-# - burn_cards: integer representing how many cards to discard
-#               at beginning of round
+# Round.py
 
-from src.deck import Deck
+from cgs.deck import Deck
 
 class Round(object):
     """Handle the deck and turns of a game
