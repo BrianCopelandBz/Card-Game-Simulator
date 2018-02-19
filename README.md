@@ -8,7 +8,9 @@ To the best of my knowledge, I'm following guidance from [Board Game Geek's thre
 
 
 # Current Status
-The end goal of this is to be a server that runs a game that allows clients to connect. As of 2/19, the individual round portion of the game is complete, but not super pythonic - there are some improvements to make to the Round.py stack:
+The end goal of this is to be a server that runs a game that allows clients to connect. As of 2/19, the individual round portion of the game is complete, but not super pythonic - it runs with a [god class](https://en.wikipedia.org/wiki/God_object) - the round - that handles absolutely everything. Check out branch break-up-god for progress in making it more object oriented, or god-mode, where I follow [Steven D'Aprano's suggestion](https://groups.google.com/forum/?hl=en#!topic/comp.lang.python/goLBrqcozNY) for splitting a god class into smaller files (with a thanks to [qtrac.eu](http://www.qtrac.eu/pyclassmulti.html) for a discussion of how to handle large class definitions).
+
+there are some improvements to make to the Round.py stack:
 
 - Turn player into a class (as opposed to the dictionary)
 - Turn the log into an object (as opposed to an array of tuples)
@@ -22,4 +24,4 @@ Also to do:
 - Implement game using flask_restful
 - Have game properly handle authentication (instead of round)
 - Create a client that listens and responds to a game
-- Test driven development, yo. Lots of tests need to be added. 
+- Test driven development, yo. Lots of tests need to be added.
