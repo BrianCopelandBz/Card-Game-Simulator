@@ -41,7 +41,6 @@ class Round(object):
         self.burn_cards = []
         self.plays = 1
 
-
         '''Players is an array of current players and
 
         a dictionary of their status
@@ -67,21 +66,16 @@ class Round(object):
         '''
         self.status = None
 
-
         # 1) Create log and start logging
         self.log = [('all', 0,'Initializing')]
         # See Log class definition below for info
 
-
         # 2) Burn Cards
-
         for i in range(num_cards_to_burn):
             self.log.append(('all', 0, 'Burning Card'))
             self.burn_cards.append(self.deck.draw_a_card())
 
-
         # 3) Handle players and distribute cards
-
         # input players is a tuple of (name, key)
         for p in players:
             self.log.append(('all', 0, 'Dealing ' + p[0] + ' a card'))
@@ -95,20 +89,8 @@ class Round(object):
             self.log.append((p[1], 0, 'Dealt ' + str(self.players[-1]['current_card'])))
             self.non_eliminated_players += 1 # drives whether a round is still running
 
-
-
-        # 4) Draw card for first player
-
-        self.current_new_card = self.deck.draw_a_card()
-
-        # Prompt all players that first player is up
-        self.log.append(('all', 0, 'Dealing ' + self.players[self.current_player]['name'] + ' a card'))
-
-        # prompt current player of option via log
-        self.log.append((self.players[self.current_player]['key'], 1, 'New card: ' + str(self.current_new_card)))
-
-        # at this point, the log is up, just waiting for client of current player to respond, and hope other players are watching the log for their turn
-        self.status = 0
+        # 4) Start Game
+        play_next_card()
 
 
 
