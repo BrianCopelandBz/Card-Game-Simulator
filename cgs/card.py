@@ -14,6 +14,9 @@ class Card(object):
         self.pick_player = pick_player
         self.prompt = prompt
 
+    def __repr__(self)
+        return str(name)
+
     def __str__(self):
         return self.name
 
