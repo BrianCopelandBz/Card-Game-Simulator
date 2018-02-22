@@ -86,7 +86,7 @@ class Round(object):
                 'protected': False,
                 'eliminated': False
                 })
-            self.log.append((p[1], 0, 'Dealt ' + str(self.players[-1]['current_card'])))
+            self.log.append((p[1], 0, 'Dealt ' + self.players[-1]['current_card']))
             self.non_eliminated_players += 1 # drives whether a round is still running
 
         # 4) Start Game
@@ -134,7 +134,7 @@ class Round(object):
 
             # log the decision:
             self.log.append(('all', 2, 'Player ' + self.players[self.current_player]['name']
-                             + ' played ' + str(self.current_played_card)))
+                             + ' played ' + self.current.played_card))
 
             # Check if player decision is needed:
             if self.current_played_card.pick_player:
@@ -168,7 +168,7 @@ class Round(object):
                 self.log.append(('all', 3, self.players[self.current_player]['name'] + ' was eliminated for discarding the Princess.'))
                 # Since they're eliminated, this player also discards their hand card
                 # Log the discarded card for all to see (per love letter rules page 11)
-                self.log.append(('all', 7, self.players[self.current_player]['name'] + ' discards ' + str(self.players[self.current_player]['current_card']) + '.'))
+                self.log.append(('all', 7, self.players[self.current_player]['name'] + ' discards ' + self.players[self.current_player]['current_card'] + '.'))
                 # Move current player's card to discard
                 self.players[self.current_player]['discarded'].append(self.players[self.current_player]['current_card'])
                 self.players[self.current_player]['current_card'] = None
@@ -219,7 +219,7 @@ class Round(object):
         elif self.current_played_card == 'Priest':
             # Tell the current player about the selected player:
             self.log.append((self.players[self.current_player]['key'], 7, self.players[selected_player]['name']
-                                 + ' has a ' + str(self.players[selected_player]['current_card']) + '.'))
+                                 + ' has a ' + self.players[selected_player]['current_card'] + '.'))
             # Log current players pick
             self.log.append(('all', 7, self.players[self.current_player]['name'] + ' viewed '
                 + self.players[selected_player]['name'] + '\'s hand.'))
@@ -237,7 +237,7 @@ class Round(object):
                                  + ' was eliminated in a Baron comparison for having the lower card.'))
                 # Log the discarded card for all to see (per love letter rules page 11)
                 self.log.append(('all', 7, self.players[selected_player]['name'] + ' discards '
-                                 + str(self.players[selected_player]['current_card']) + '.'))
+                                 + self.players[selected_player]['current_card'] + '.'))
                 # Move the current card to discard for the selected player
                 self.players[selected_player]['discarded'].append(self.players[selected_player]['current_card'])
                 self.players[selected_player]['current_card'] = None
@@ -250,7 +250,7 @@ class Round(object):
                                  + ' was eliminated in a Baron comparison for having the lower card.'))
                 # Log the discarded card for all to see (per love letter rules page 11)
                 self.log.append(('all', 7, self.players[self.current_player]['name'] + ' discards '
-                                 + str(self.players[self.current_player]['current_card']) + '.'))
+                                 + self.players[self.current_player]['current_card'] + '.'))
                 # Move the current card to discard for the selected player
                 self.players[self.current_player]['discarded'].append(self.players[selected_player]['current_card'])
                 self.players[self.current_player]['current_card'] = None
@@ -261,10 +261,10 @@ class Round(object):
                                  + ' compared hands and tied.'))
                 # Tell each player what the opponent had, even if it's the same.
                 self.log.append((self.players[self.current_player]['key'], 7, self.players[selected_player]['name']
-                                 + ' had a ' + str(self.players[selected_player]['current_card'])
+                                 + ' had a ' + self.players[selected_player]['current_card']
                                  + ' which tied you in the Baron compare.'))
                 self.log.append((self.players[selected_player]['key'], 7, self.players[self.current_player]['name']
-                                 + ' had a ' + str(self.players[self.current_player]['current_card'])
+                                 + ' had a ' + self.players[self.current_player]['current_card']
                                  + ' which tied you in the Baron compare.'))
             # End baron compares, move on
             self.current_played_card = None
@@ -293,7 +293,7 @@ class Round(object):
                     # Draw New Card
                     self.players[selected_player]['current_card'] = self.deck.draw_a_card()
                     # print new cards privately
-                    self.log.append((self.players[selected_player]['key'], 7, 'You now have the ' + str(self.players[selected_player]['current_card'])))
+                    self.log.append((self.players[selected_player]['key'], 7, 'You now have the ' + self.players[selected_player]['current_card']))
                     # Clear current played card, its done
                     self.current_played_card = None
                     # Play next card
@@ -316,8 +316,8 @@ class Round(object):
             self.log.append(('all', 2, self.players[self.current_player]['name'] + ' swapped hands with ' +
                             self.players[selected_player]['name']))
             # print new cards privately
-            self.log.append((self.players[self.current_player]['key'], 7, 'You now have the ' + str(self.players[self.current_player]['current_card'])))
-            self.log.append((self.players[selected_player]['key'], 7, 'You now have the ' + str(self.players[selected_player]['current_card'])))
+            self.log.append((self.players[self.current_player]['key'], 7, 'You now have the ' + self.players[self.current_player]['current_card']))
+            self.log.append((self.players[selected_player]['key'], 7, 'You now have the ' + self.players[selected_player]['current_card']))
             # Clear current played card, its done
             self.current_played_card = None
             # Play next card
@@ -340,11 +340,11 @@ class Round(object):
             abort(404, message="Not a valid card, did you typo?")
         else:
             # perform comparison
-            if selected_card.lower().strip() == str(self.players[self.guard_person_picked]['current_card']).lower():
+            if selected_card.lower().strip() == self.players[self.guard_person_picked]['current_card'].lower():
                 # Log the Selection and attempt
                 self.log.append(('all', 2, self.players[self.current_player]['name'] + ' guessed that '
                                  + self.players[self.guard_person_picked]['name'] + ' had a '
-                                 + str(self.players[self.guard_person_picked]['current_card'])
+                                 + self.players[self.guard_person_picked]['current_card']
                                  + ' and was right! ' + self.players[self.guard_person_picked]['name']
                                  + ' is now eliminated.'))
                 self.players[self.guard_person_picked]['eliminated'] = True
@@ -416,7 +416,7 @@ class Round(object):
             self.log.append(('all', 0, 'Dealing ' + self.players[self.current_player]['name'] + ' a card'))
 
             # prompt current player of option via log
-            self.log.append((self.players[self.current_player]['key'], 1, 'New card: ' + str(self.current_new_card)))
+            self.log.append((self.players[self.current_player]['key'], 1, 'New card: ' + self.current_new_card))
 
             # at this point, the log is up, just waiting for client of current player to respond, and hope other players are watching the log for their turn
             self.status = 0
@@ -436,7 +436,7 @@ class Round(object):
         current_winner = None
         current_tied_player = None
         for p in remaining_players:
-            self.log.append(('all', 7, p['name'] + ' is still in with a ' + str(p['current_card'])
+            self.log.append(('all', 7, p['name'] + ' is still in with a ' + p['current_card']
                              + ', strength ' + str(int(p['current_card']))))
             if int(p['current_card']) > current_winner_strength:
                 current_winner = p
