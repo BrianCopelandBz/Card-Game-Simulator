@@ -94,7 +94,7 @@ class Round(object):
 
 
 
-    def pick_card_to_play(self, secret_key, card):
+    def pick_card_to_play(self, card):
         ''' Check that the secret key matches the
             current player, then log and process
             Else, 404
@@ -182,7 +182,7 @@ class Round(object):
 
 
 
-    def select_player(self, secret_key, selected_player):
+    def select_player(self, selected_player):
         ''' Check that the secret key matches the
             current player, check that player is in game,
             then log and process
@@ -324,7 +324,7 @@ class Round(object):
             self.play_next_card()
 
 
-    def select_guard_guess(self, secret_key, selected_card):
+    def select_guard_guess(self, selected_card):
         ''' Check that the secret key matches the
             current player, check that player is in game,
             then log and process
@@ -481,16 +481,16 @@ class Round(object):
         self.status = 3
 
 
-    def abort_if_not_authorized(self, secret_key):
+    def abort_if_not_authorized(self):
         if secret_key not in [d['key'] for d in self.players]:
             abort(404, message="You are not in this game")
 
-    def abort_if_not_current_turn(self, secret_key):
+    def abort_if_not_current_turn(self):
         if secret_key != self.players[self.current_player]['key']:
             abort(404, message="It is not your turn")
 
 
-    def get_current_card(self, secret_key):
+    def get_current_card(self):
         ''' Look up player by secret key
             if secret key isn't in list, abort
             otherwise, return current card
@@ -501,7 +501,7 @@ class Round(object):
         # if we didnt find the player, return error
         abort(404, message="You are not in this game")
 
-    def get_new_card(self, secret_key):
+    def get_new_card(self):
         ''' Check that the secret key matches the
             current player. If so, return the
             current new card.
@@ -514,7 +514,7 @@ class Round(object):
 
 
 
-    def get_player_log(self, event_id, secret_key):
+    def get_player_log(self, event_id):
         ''' return the game log from event_id onward,
         but only
         '''
